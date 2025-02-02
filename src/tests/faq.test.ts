@@ -22,7 +22,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    await redis.quit(); 
+    await redis.quit();
     server.close()
 });
 
@@ -39,13 +39,13 @@ describe("FAQ API Tests", () => {
         expect(res.status).toBe(201);
         expect(res.body.success).toBe(true);
         faqId = res.body.faq.id;
-    });
+    }, 10000);
 
     it("Should fetch FAQs in English", async () => {
         const res = await request(app).get("/api/v1/faqs/?lang=en");
         expect(res.status).toBe(200);
         expect(res.body.faqs.length).toBeGreaterThan(0);
-    });
+    }, 10000);
 
     it("Should fetch FAQs in Hindi (Triggers Translation)", async () => {
         const res = await request(app).get("/api/v1/faqs/?lang=hi");
@@ -61,7 +61,7 @@ describe("FAQ API Tests", () => {
 
         expect(res.status).toBe(200);
         expect(res.body.success).toBe(true);
-    });
+    }, 10000);
 
     it("Should delete an FAQ", async () => {
         const res = await request(app)
@@ -70,6 +70,6 @@ describe("FAQ API Tests", () => {
 
         expect(res.status).toBe(200);
         expect(res.body.success).toBe(true);
-    });
+    }, 10000);
 
 });

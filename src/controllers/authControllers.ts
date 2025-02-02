@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { PrismaClient } from "@prisma/client";
+import redis from "../utils/redis";
 
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET as string;
@@ -82,7 +83,7 @@ export const signin = async (req: Request, res: Response): Promise<void> => {
 
         //generate token
         const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
-
+        
         res.status(200).json({ message: "Login Successful", success: true, token });
 
     } catch (error) {

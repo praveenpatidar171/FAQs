@@ -173,7 +173,7 @@ model User {
   
   email    String  @unique
   
-  password String
+  password String 
   
   role     String  @default("user") // admin or user , admin can modify faqs and user can view
   
