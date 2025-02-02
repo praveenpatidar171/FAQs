@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model FAQ {
+  id         Int      @id @default(autoincrement())
+  originalId Int? // Store the original English FAQ ID 
+  question   String
+  answer     String
+  lang       String   @default("en")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  createdBy Int // we will store the id of admin who creates this 
+  admin     User @relation(fields: [createdBy], references: [id])
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  fullName String
+  email    String @unique
+  password String
+  role     String @default("user") // admin or user , admin can modify faqs and user can view 
+
+  faqs FAQ[]
+}
