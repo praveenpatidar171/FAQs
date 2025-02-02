@@ -22,7 +22,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    await redis.quit();  // ✅ Close Redis connection
+    await redis.quit(); 
     server.close()
 });
 
